@@ -3,10 +3,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: process.env.NODE_ENV,
-    entry: '.', //will update with top-level file later
+    entry: {
+        bundle: path.resolve(__dirname, 'client/main.js') //can have multiple entry points for code splitting
+    },
     output: {
-        filename: main.jsx,
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
+        assetModuleFilename: '[name][ext]', //will keep name of gif and jpegs
     },
     module: {
         rules: [
@@ -35,7 +38,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            template: 'index.html',
+            // filename: 'index.html',
         }),
     ],
     devServer: {
@@ -47,7 +51,7 @@ module.exports = {
       proxy: [
         {
         context: ['/api', 'signup', 'drawing'], // add routes here as needed
-        target: 'http//localhost:3000', // this is the backend/server 
+        target: 'http://localhost:3000', // this is the backend/server 
         secure: false, //if proxy should verify SSL cert, needed for dev enviroment to be false
         changeOrigin: true, // will change origin header to domain of target b4 forwarding. can be necesary to prevent CSRF attack
 
