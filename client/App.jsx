@@ -1,3 +1,4 @@
+
 import React, { useState, useLayoutEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; //assuming we'll be using react router but can change if needed
 import rough from "roughjs";
@@ -7,9 +8,12 @@ const App = () => {
   const [elements, setElements] = useState([]);
   //sets state of drawing by user to false
   const [drawing, setDrawing] = useState(false);
+  //sets state of element type to  a string
+  const [elementType, setElementType] = useState("line");
 
   const canvasRef = useRef(null);
   const RoughCanvasRef = useRef(null);
+
   //example from MDN on how to render shapes to the canvas
   useLayoutEffect(() => {
     // const canvas = document.getElementById("canvas");
@@ -23,15 +27,18 @@ const App = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
     // const generator = roughCanvas.generator;
 
+    elements.forEach(({ roughElement }) => RoughCanvasRef.current.draw(roughElement))
     const rectangle = RoughCanvasRef.current.generator.rectangle(10, 10, 100, 100);
     const line = RoughCanvasRef.current.generator.line(10, 10, 110, 110);
     RoughCanvasRef.current.draw(rectangle);
     RoughCanvasRef.current.draw(line);
-  }, []);
+  }, [elements]);
 
-  const createElement = (x1, x2, y1, y2) => {
-    const roughElement = RoughCanvasRef.current.generator.line(x1, x2, y1, y2);
-    return { x1, x2, y1, y2, roughElement };
+  //createElement func will create a line
+  //can build out more for other shapes
+  const createElement = (x1, y1, x2, y2) => {
+    const roughElement = RoughCanvasRef.current.generator.line(x1, y1, x2, y2);
+    return { x1, y1, x2, y2, roughElement };
   };
 
   const handleMouseDown = (e) => {
@@ -44,7 +51,14 @@ const App = () => {
   const handleMouseMove = (e) => {
     if (!drawing) return;
     const { clientX, clientY } = e;
-    console.log("mouse coordinates: ", clientX, clientY);
+    const index = elements.length -1;
+    const { x1, y1 } = elements[index];
+    const updatedElement = createElement(x1, y1, clientX, clientY)
+    // console.log("mouse coordinates: ", clientX, clientY);
+
+    const elementsCopy = [...elements];
+    elementsCopy[index] = updatedElement;
+    setElements(elementsCopy);
   };
 
   const handleMouseUp = (e) => {
