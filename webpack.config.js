@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: process.env.NODE_ENV,
     entry: {
-        bundle: path.resolve(__dirname, 'client/main.js') //can have multiple entry points for code splitting
+        bundle: path.resolve(__dirname, 'client/main.jsx') //can have multiple entry points for code splitting
     },
     output: {
         filename: '[name].js',
@@ -43,7 +43,7 @@ module.exports = {
         }),
     ],
     devServer: {
-      contentBase: path.join(__dirname, 'dist'),
+    //   contentBase: path.join(__dirname, 'dist'), //received webpack-CLI error with this so commenting out for now
       compress: true, //makes a g zip compression- aka quicker
       port: 8080,
       open: true,
