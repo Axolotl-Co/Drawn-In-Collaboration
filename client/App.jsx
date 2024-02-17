@@ -1,7 +1,9 @@
 
 import React, { useState, useLayoutEffect, useRef } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; //assuming we'll be using react router but can change if needed
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom"; //assuming we'll be using react router but can change if needed
 import rough from "roughjs";
+import Signup from './components/Signup.jsx';
+import Login from "./components/Login.jsx";
 
 const App = () => {
   //sets state of elements on canvas to empty array
@@ -26,7 +28,6 @@ const App = () => {
     //0,0 represents top left corner and canvas width and canvas height specify how much of canvas to clear
     context.clearRect(0, 0, canvas.width, canvas.height);
     // const generator = roughCanvas.generator;
-
     elements.forEach(({ roughElement }) => RoughCanvasRef.current.draw(roughElement))
     const rectangle = RoughCanvasRef.current.generator.rectangle(10, 10, 100, 100);
     const line = RoughCanvasRef.current.generator.line(10, 10, 110, 110);
