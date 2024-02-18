@@ -1,4 +1,5 @@
 import React from "react"
+import './component.scss';
 
 
 
@@ -9,10 +10,10 @@ const Signup = () => {
           <a href="login">
             <button>Login Instead</button>
           </a>
-          <form id="boxcontainer">
+          <form id="boxContainerSignup">
             <input className='searchbox' name="username" type="text" placeholder="username" ></input>
             <input className='searchbox' name="password" type="password" placeholder="password" ></input>
-            <input className="btn" type="submit" value="create user"></input>
+            <input className="signupButton" type="submit" value="Signup"></input>
           </form>
         </div>
         )
