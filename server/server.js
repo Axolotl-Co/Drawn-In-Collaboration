@@ -9,8 +9,8 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 
 // const userRoutes = require('./routes/user');
-const userRoutes = require('./routes/user');
-const canvasRoutes = require('./routes/canvas');
+// const userRoutes = require('./routes/user');
+// const canvasRoutes = require('./routes/canvas');
 
 const mongoose = require('mongoose');
 
@@ -33,19 +33,19 @@ io.on('connection', (socket) => {
   })
 })
 
-const connectionString = 'mongodb+srv://canvasdb:3otzrUz8QzvKD5Ci@canvas-project.unblkwj.mongodb.net/?retryWrites=true&w=majority';
+// const connectionString = 'mongodb+srv://canvasdb:3otzrUz8QzvKD5Ci@canvas-project.unblkwj.mongodb.net/?retryWrites=true&w=majority';
 
-mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Could not connect to MongoDB...', err));
+// mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => console.log('Connected to MongoDB'))
+//   .catch(err => console.error('Could not connect to MongoDB...', err));
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../dist')));
 
 //middleware routing 
-app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
-app.use('/canvas', canvasRoutes);
+// app.use('/auth', authRoutes);
+// app.use('/user', userRoutes);
+// app.use('/canvas', canvasRoutes);
   
      
 // The "catchall" handler: for any request that doesn't
