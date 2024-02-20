@@ -38,16 +38,10 @@ const io = new Server(server, {
 });
 
 //connection to websocket/socket.io
-// io.on('connection', (socket) => {
-//   console.log(`user socket id ${socket.id}`); //random id that is assisnged to each person when connected to server
-//   socket.on('send', (number, string, object) => {
-//       console.log(number, string, object); 
-//   })
-// })
 io.on('connection', (socket) => {
-  console.log('socket connection on')
-  socket.on('draw-line', ({ elements, drawing, elementType }) => { 
-    socket.broadcast.emit('draw-line', { elements, drawing, elementType })
+  console.log(`user socket id ${socket.id}`); //random id that is assisnged to each person when connected to server
+  socket.on('send', (number, string, object) => {
+      console.log(number, string, object); 
   })
 })
 

@@ -7,11 +7,24 @@ import Login from "./components/Login.jsx";
 import Toolbar from "./components/toolbar.jsx";
 import { io } from "socket.io-client"
 const socket = io.connect('http://localhost:3000') // server ... we can also put this in a serparate component and import it 
-import logo from './assets/logo.jpg'
+
 
 
 
 const App = () => {
+<<<<<<< HEAD
+=======
+  // Event listener for connection
+  const sendMessge = () => {
+
+    socket.emit('send_message', 10, 'HI', {a : 'ehhhh'});
+  }
+    // Cleanup function to disconnect the socket when the component unmounts
+ 
+
+
+
+>>>>>>> 746a201a69094f70366cfb7a19410918d5364d0c
   //sets state of elements on canvas to empty array
   const [elements, setElements] = useState([]);
   //sets state of drawing by user to false
@@ -20,13 +33,23 @@ const App = () => {
   const [elementType, setElementType] = useState("line");
   const [toolType, setToolType] = useState("pencil");
   //render the HTML canvas element
+<<<<<<< HEAD
   
 
+=======
+
+  // <button onClick={sendMessge}> Send Message</button>
+
+>>>>>>> 746a201a69094f70366cfb7a19410918d5364d0c
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login/>}/>
+<<<<<<< HEAD
+=======
+        <Route path="/login" element={<Login/>}/>
+>>>>>>> 746a201a69094f70366cfb7a19410918d5364d0c
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/canvas" element={
           <>
@@ -36,11 +59,15 @@ const App = () => {
           setElements={setElements}
           drawing={drawing}
           setDrawing={setDrawing}
+<<<<<<< HEAD
           toolType={toolType}
           />
           </>
         }
         />
+=======
+        />}/>
+>>>>>>> 746a201a69094f70366cfb7a19410918d5364d0c
       </Routes>
     </BrowserRouter>
   );

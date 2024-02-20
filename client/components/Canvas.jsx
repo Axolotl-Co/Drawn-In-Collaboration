@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import rough from "roughjs"; //rough is a library with shapes!
 import getStroke from "perfect-freehand"; //tool that allows for the freehand drawing
 
-const Canvas = ({ elements, setElements, drawing, setDrawing, toolType }) => {
+const Canvas = ({ elements, setElements, drawing, setDrawing, sendDrawing }) => {
   const canvasRef = useRef(null);
   const RoughCanvasRef = useRef(null); //useRef allows you to persist values between renders
 
@@ -52,42 +52,18 @@ const Canvas = ({ elements, setElements, drawing, setDrawing, toolType }) => {
     if (!drawing || elements.length === 0) return;
     const { clientX, clientY } = e;
     const index = elements.length - 1;
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    const { x1, y1 } = elements[index];
+    const updatedElement = createElement(x1, y1, clientX, clientY);
 
-    const updatedElement = createElement(
-      elements[index].points || [],
-      clientX,
-      clientY
-    );
-      //copy the elements to store as state
-    setElements((prevState) => {
-      const elementsCopy = [...prevState];
-      elementsCopy[index] = updatedElement;
-      return elementsCopy;
-    });
-
-    freeDraw(context, updatedElement.points);
+    const elementsCopy = [...elements];
+    elementsCopy[index] = updatedElement;
+    setElements(elementsCopy);
+    sendDrawing(elementsCopy); //sends the updated drawing to the other clients
   };
 
   const handleMouseUp = () => {
     setDrawing(false);
-  };
-
-  const createElement = (points, x, y) => {
-    if (toolType === "pencil") {
-      const updatedPoints = [...points, [x, y]];
-      const stroke = getStroke(updatedPoints);
-      return { points: updatedPoints, type: "pencil", stroke };
-    } else if (toolType === "line") {
-      if (points.length === 0) {
-        const roughElement = RoughCanvasRef.current.generator.line(x, y, x, y);
-        return { points: [[x, y]], type: "line", roughElement };
-      } else {
-        const updatedPoints = [...points, [x, y]];
-        return { points: updatedPoints, type: "line" };
-      }
-    }
+    sendDrawing(elements);// Send the final drawing to other clients
   };
 
   return (
