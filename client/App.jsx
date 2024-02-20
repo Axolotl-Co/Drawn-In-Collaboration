@@ -7,7 +7,7 @@ import Signup from './components/Signup.jsx';
 import Login from "./components/Login.jsx";
 import { io } from "socket.io-client"
 const socket = io.connect('http://localhost:3000') // server ... we can also put this in a serparate component and import it 
-
+import logo from './assets/logo.jpg'
 
 
 
@@ -44,7 +44,9 @@ useEffect(()=> {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login/>}/>
+        <Route path="/" element={ <div> <img id="logo" src={logo}/>   <Login/> </div>}
+      
+        />
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/canvas" element={<Canvas
