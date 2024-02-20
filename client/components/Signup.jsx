@@ -20,7 +20,7 @@ import React, { useState } from "react";
         const data = await response.json();
     
         if (response.ok) {
-          window.location.href = '/login';
+          window.location.href = '/canvas';
         } else {
           console.error(data.error);
         }

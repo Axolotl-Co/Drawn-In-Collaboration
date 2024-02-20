@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './component.scss';
 
 const Login = () => {
@@ -22,7 +23,7 @@ const Login = () => {
     if(response.ok) {
       window.location.href = '/canvas';
     } else{
-      console.error(data.error);
+      console.error(data.message);
     }
   };
 
@@ -37,8 +38,11 @@ const Login = () => {
             <input className='searchbox' name="username" type="text" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)} ></input>
             <input className='searchbox' name="password" type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
             <input className="loginButton" type="submit" value="Login"></input>
+            <Link to="/signup">
+          <button>Sign Up</button>
+          </Link>
           </form>
-
+          
         </div>
         )
     }
