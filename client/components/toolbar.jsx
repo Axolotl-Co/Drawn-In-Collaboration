@@ -1,6 +1,4 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
-import rough from "roughjs";
-import getStroke from "perfect-freehand";
 import './component.scss';
 
 const Toolbar = ({ setToolType }) => {

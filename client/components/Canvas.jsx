@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import rough from "roughjs";
-import getStroke from "perfect-freehand";
+import rough from "roughjs"; //rough is a library with shapes!
+import getStroke from "perfect-freehand"; //tool that allows for the freehand drawing
 
 const Canvas = ({ elements, setElements, drawing, setDrawing, toolType }) => {
   const canvasRef = useRef(null);
-  const RoughCanvasRef = useRef(null);
+  const RoughCanvasRef = useRef(null); //useRef allows you to persist values between renders
 
   useEffect(() => {
     RoughCanvasRef.current = rough.canvas(canvasRef.current);
   }, [toolType]);
 
+  //had to google how the below logic works. We are using HTML Canvas rather than SVG path
   const freeDraw = (context, stroke) => {
     if (!stroke.length) return;
 
@@ -29,17 +30,22 @@ const Canvas = ({ elements, setElements, drawing, setDrawing, toolType }) => {
     context.stroke();
   };
 
+  // tracks users mouse coordinates relative to page
   const handleMouseDown = (e) => {
-    setDrawing(true);
+    setDrawing(true); //update state of canvas
     const { clientX, clientY } = e;
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
     const newElement = createElement([], clientX, clientY);
     setElements((prevState) => [...prevState, newElement]);
-
+    //originally was going with different tools but last minute effort will just go with diff colors
+    if (toolType === 'pencil') {
     context.strokeStyle = "#000"; // Set the stroke color
     context.lineWidth = 2; // Set the line width
+    } else if (toolType === 'line') {
+      context.strokeStyle = '#FF0000';
+    }
   };
 
   const handleMouseMove = (e) => {

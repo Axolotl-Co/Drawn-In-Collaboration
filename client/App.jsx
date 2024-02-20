@@ -1,7 +1,6 @@
 
 import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom"; //assuming we'll be using react router but can change if needed
-import rough from "roughjs";
 import Canvas from './components/Canvas.jsx';
 import Signup from './components/Signup.jsx';
 import Login from "./components/Login.jsx";
@@ -13,12 +12,6 @@ import logo from './assets/logo.jpg'
 
 
 const App = () => {
-  // Event listener for connection
-  // Cleanup function to disconnect the socket when the component unmounts
-  
-  
-  
-  
   //sets state of elements on canvas to empty array
   const [elements, setElements] = useState([]);
   //sets state of drawing by user to false
@@ -28,7 +21,6 @@ const App = () => {
   const [toolType, setToolType] = useState("pencil");
   //render the HTML canvas element
   
-  // <button onClick={sendMessge}> Send Message</button>
 
 
   return (
@@ -37,13 +29,18 @@ const App = () => {
         <Route path="/" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/canvas" element={
+          <>
           <Toolbar toolType={toolType} setToolType={setToolType}/>
         <Canvas
           elements={elements}
           setElements={setElements}
           drawing={drawing}
           setDrawing={setDrawing}
-        />}/>
+          toolType={toolType}
+          />
+          </>
+        }
+        />
       </Routes>
     </BrowserRouter>
   );
