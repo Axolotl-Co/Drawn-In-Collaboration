@@ -1,87 +1,94 @@
-import React, { useState, useLayoutEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import rough from "roughjs";
 import getStroke from "perfect-freehand";
 
-const Canvas = ({ elements, setElements, drawing, setDrawing }) => {
+const Canvas = ({ elements, setElements, drawing, setDrawing, toolType }) => {
   const canvasRef = useRef(null);
   const RoughCanvasRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const canvas = canvasRef.current;
-    const roughCanvas = rough.canvas(canvas);
-    RoughCanvasRef.current = roughCanvas;
-    const context = canvas.getContext("2d");
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    elements.forEach(({ roughElement }) =>
-      RoughCanvasRef.current.draw(roughElement)
-    );
-  }, [elements]);
+  useEffect(() => {
+    RoughCanvasRef.current = rough.canvas(canvasRef.current);
+  }, [toolType]);
 
-  const createElement = (x1, y1, x2, y2) => {
-    const roughElement = RoughCanvasRef.current.generator.line(x1, y1, x2, y2);
-    return { x1, y1, x2, y2, roughElement };
-  };
+  const freeDraw = (context, stroke) => {
+    if (!stroke.length) return;
 
-  const freeDraw = stroke => {
-    if (!stroke.length) return "";
-  
-    const d = stroke.reduce(
-      (acc, [x0, y0], i, arr) => {
-        const [x1, y1] = arr[(i + 1) % arr.length];
-        acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2);
-        return acc;
-      },
-      ["M", ...stroke[0], "Q"]
-    );
-  
-    d.push("Z");
-    return d.join(" ");
-  };
+    context.beginPath();
+    context.moveTo(stroke[0][0], stroke[0][1]);
 
-  const drawElement = (roughCanvas, context, element) => {
-    switch (element.type) {
-      case "line":
-      case "rectangle":
-        roughCanvas.draw(element.roughElement);
-        break;
-      case "pencil":
-        const stroke = getSvgPathFromStroke(getStroke(element.points));
-        context.fill(new Path2D(stroke));
-        break;
-      case "text":
-        context.textBaseline = "top";
-        context.font = "24px sans-serif";
-        context.fillText(element.text, element.x1, element.y1);
-        break;
-      default:
-        throw new Error(`Type not recognised: ${element.type}`);
+    for (let i = 1; i < stroke.length - 2; i++) {
+      const [x1, y1] = stroke[i];
+      const [x2, y2] = stroke[i + 1];
+      const xc = (x1 + x2) / 2;
+      const yc = (y1 + y2) / 2;
+
+      context.quadraticCurveTo(x1, y1, xc, yc);
     }
+
+    context.lineTo(stroke[stroke.length - 1][0], stroke[stroke.length - 1][1]);
+    context.stroke();
   };
 
   const handleMouseDown = (e) => {
     setDrawing(true);
     const { clientX, clientY } = e;
-    const element = createElement(clientX, clientY, clientX, clientY);
-    setElements((prevState) => [...prevState, element]);
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
+    const newElement = createElement([], clientX, clientY);
+    setElements((prevState) => [...prevState, newElement]);
+
+    if (toolType === "pencil") {
+      context.strokeStyle = "#000"; // Set the stroke color
+      context.lineWidth = 2; 
+    } if (toolType === "line") {
+      // Set the line width
+      context.strokeStyle = "#FF0000"; // Set the stroke color
+      context.lineWidth = 4; 
   };
+}
 
   const handleMouseMove = (e) => {
-    if (!drawing) return;
+    if (!drawing || elements.length === 0) return;
     const { clientX, clientY } = e;
     const index = elements.length - 1;
-    const { x1, y1 } = elements[index];
-    const updatedElement = createElement(x1, y1, clientX, clientY);
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
 
-    const elementsCopy = [...elements];
-    elementsCopy[index] = updatedElement;
-    setElements(elementsCopy);
+    const updatedElement = createElement(
+      elements[index].points || [],
+      clientX,
+      clientY
+    );
+
+    setElements((prevState) => {
+      const elementsCopy = [...prevState];
+      elementsCopy[index] = updatedElement;
+      return elementsCopy;
+    });
+
+    freeDraw(context, updatedElement.points);
   };
 
   const handleMouseUp = () => {
     setDrawing(false);
   };
 
-
+  const createElement = (points, x, y) => {
+    if (toolType === "pencil") {
+      const updatedPoints = [...points, [x, y]];
+      const stroke = getStroke(updatedPoints);
+      return { points: updatedPoints, type: "pencil", stroke };
+    } else if (toolType === "line") {
+      if (points.length === 0) {
+        const roughElement = RoughCanvasRef.current.generator.line(x, y, x, y);
+        return { points: [[x, y]], type: "line", roughElement };
+      } else {
+        const updatedPoints = [...points, [x, y]];
+        return { points: updatedPoints, type: "line" };
+      }
+    }
+  };
 
   return (
     <canvas
@@ -99,3 +106,7 @@ const Canvas = ({ elements, setElements, drawing, setDrawing }) => {
 };
 
 export default Canvas;
+
+
+
+

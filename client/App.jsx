@@ -5,6 +5,7 @@ import rough from "roughjs";
 import Canvas from './components/Canvas.jsx';
 import Signup from './components/Signup.jsx';
 import Login from "./components/Login.jsx";
+import Toolbar from "./components/toolbar.jsx";
 import { io } from "socket.io-client"
 const socket = io.connect('http://localhost:3000') // server ... we can also put this in a serparate component and import it 
 
@@ -28,22 +29,32 @@ const App = () => {
   const [drawing, setDrawing] = useState(false);
   //sets state of element type to  a string
   const [elementType, setElementType] = useState("line");
+  const [toolType, setToolType] = useState("pencil");
   //render the HTML canvas element
 
-  // <button onClick={sendMessage}> Send Message</button>
+  // <button onClick={sendMessge}> Send Message</button>
 
   return (
     <BrowserRouter>
-      {/* <button onClick={sendMessage}> Send Message</button> */}
       <Routes>
-        <Route path="/" element={<Login/>}/>
-        <Route path="/signup" element={<Signup/>}/>
-        <Route path="/canvas" element={<Canvas
-          elements={elements}
-          setElements={setElements}
-          drawing={drawing}
-          setDrawing={setDrawing}
-        />}/>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/canvas"
+          element={
+            <>
+              <Toolbar toolType={toolType} setToolType={setToolType} />
+              <Canvas
+                elements={elements}
+                setElements={setElements}
+                drawing={drawing}
+                setDrawing={setDrawing}
+                toolType={toolType}
+                setToolType={setToolType}
+              />
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,28 @@
 $primary-color: #1175df;
 $light-primary-color: lighten($primary-color, 30%);
 
-
+.toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    padding: 10px;
+    width: 100%;
+    z-index: 1000;
+  }
+  .buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .title {
+    margin-bottom: 10px;
+  }
+  
 #boxContainerSignup {
     width: 300px;
     margin: auto;
