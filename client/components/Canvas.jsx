@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
 import rough from "roughjs";
 
-const Canvas = ({ elements, setElements, drawing, setDrawing }) => {
+const Canvas = ({ elements, setElements, drawing, setDrawing, sendDrawing }) => {
   const canvasRef = useRef(null);
   const RoughCanvasRef = useRef(null);
 
@@ -38,10 +38,12 @@ const Canvas = ({ elements, setElements, drawing, setDrawing }) => {
     const elementsCopy = [...elements];
     elementsCopy[index] = updatedElement;
     setElements(elementsCopy);
+    sendDrawing(elementsCopy); //sends the updated drawing to the other clients
   };
 
   const handleMouseUp = () => {
     setDrawing(false);
+    sendDrawing(elements);// Send the final drawing to other clients
   };
 
   return (

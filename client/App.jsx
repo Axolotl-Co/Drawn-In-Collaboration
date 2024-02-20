@@ -13,15 +13,11 @@ const socket = io.connect('http://localhost:3000') // server ... we can also put
 
 const App = () => {
   // Event listener for connection
-  const sendMessge = () => {
-
-    socket.emit('send_message', 10, 'HI', {a : 'ehhhh'});
-  }
-    // Cleanup function to disconnect the socket when the component unmounts
- 
-
-
-
+  // Cleanup function to disconnect the socket when the component unmounts
+  
+  
+  
+  
   //sets state of elements on canvas to empty array
   const [elements, setElements] = useState([]);
   //sets state of drawing by user to false
@@ -29,9 +25,21 @@ const App = () => {
   //sets state of element type to  a string
   const [elementType, setElementType] = useState("line");
   //render the HTML canvas element
-
+  
   // <button onClick={sendMessge}> Send Message</button>
+  const sendDrawing = (newElements) => {
+    socket.emit('draw-line', { elements: newElements, drawing, elementType });
+    
+  }
 
+useEffect(()=> {
+  socket.on('draw-line', (data) => {
+    setElements(data.elements);
+  });
+  return () => {
+    socket.off('draw-line'); 
+  };
+}, []);
 
   return (
     <BrowserRouter>
@@ -44,6 +52,7 @@ const App = () => {
           setElements={setElements}
           drawing={drawing}
           setDrawing={setDrawing}
+          sendDrawing={sendDrawing}
         />}/>
       </Routes>
     </BrowserRouter>
