@@ -60,7 +60,7 @@ const Canvas = ({ elements, setElements, drawing, setDrawing, toolType }) => {
       clientX,
       clientY
     );
-
+      //copy the elements to store as state
     setElements((prevState) => {
       const elementsCopy = [...prevState];
       elementsCopy[index] = updatedElement;
