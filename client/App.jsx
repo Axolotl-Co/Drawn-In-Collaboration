@@ -30,18 +30,20 @@ const App = () => {
   const [elementType, setElementType] = useState("line");
   //render the HTML canvas element
   return (
-    <canvas
-      id="canvas"
-      ref={canvasRef}
-      // style={{backgroundColor: "blue"}}
-      width={window.innerWidth}
-      height={window.innerHeight}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-    >
-      Canvas
-    </canvas>
+    <div>
+
+
+    <button onClick={sendMessge}> Send Message</button>
+
+      <Signup>Signup</Signup>
+      <Login>Login</Login>
+      <Canvas
+      elements={elements}
+      setElements={setElements}
+      drawing={drawing}
+      setDrawing={setDrawing}
+      />
+    </div>
   );
 };
 
