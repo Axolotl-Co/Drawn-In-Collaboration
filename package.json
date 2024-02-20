@@ -4,7 +4,7 @@
   "description": "collaborative white board drawing and meme creation for teams",
   "main": "tbd",
   "scripts": {
-    "start:frontend": "nodemon server/server.js",
+    "start:frontend": "webpack serve --open --mode development --config webpack.config.js",
     "start:backend": "node server/server.js",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "stop": "pkill node",

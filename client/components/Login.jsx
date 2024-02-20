@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from 'react';
 import './component.scss';
 
 const Login = () => {
@@ -6,26 +6,25 @@ const Login = () => {
   const [username, setUsername] = useState(''); 
   const [password, setPassword] = useState('');
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault(); //prevents from blank submission
-
-  //   const response = await fetch('/', {
-  //     method: 'POST',
-  //     headers:{
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({ username, password }),
-  //   });
-
-  //   const data = await response.json();
-
-  //   if(response.ok) {
-  //     window.location.href = '/canvas';
-  //   } else{
-  //     console.error(data.error);
-  //   }
-
-  // };
+  const handleSubmit = async (event) => {
+    event.preventDefault(); //prevents from blank submission
+  
+    const response = await fetch('/auth/login', {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+  
+    const data = await response.json();
+  
+    if(response.ok) {
+      window.location.href = '/canvas';
+    } else{
+      console.error(data.error);
+    }
+  };
 
 
 

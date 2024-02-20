@@ -50,7 +50,7 @@ module.exports = {
       hot: true,
       proxy: [
         {
-        context: ['/api', '/signup', '/login'], // add routes here as needed
+        context: ['/api', '/signup', '/login', '/canvas'], // add routes here as needed
         target: 'http://localhost:3000', // this is the backend/server 
         secure: false, //if proxy should verify SSL cert, needed for dev enviroment to be false
         changeOrigin: true, // will change origin header to domain of target b4 forwarding. can be necesary to prevent CSRF attack
