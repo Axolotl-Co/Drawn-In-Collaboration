@@ -5,7 +5,7 @@
   "main": "tbd",
   "scripts": {
     "start:frontend": "nodemon server/server.js",
-    "start:backend": "nodemon server/server.js",
+    "start:backend": "node server/server.js",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "stop": "pkill node",
     "restart": "npm run stop && npm run start",

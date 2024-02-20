@@ -11,11 +11,13 @@ const cors = require('cors');
 // const userRoutes = require('./routes/user');
 // const canvasRoutes = require('./routes/canvas');
 
+
 const mongoose = require('mongoose');
 
 app.use(cors());
 //http server created for websocket. need a seperated one from the server
 const server = http.createServer(app);
+
 
 // initilizing Socket.IO with the server instance
 const io = new Server(server, {
@@ -34,9 +36,27 @@ io.on('connection', (socket) => {
 
 const connectionString = 'mongodb+srv://canvasdb:3otzrUz8QzvKD5Ci@canvas-project.unblkwj.mongodb.net/?retryWrites=true&w=majority';
 
-mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('Could not connect to MongoDB...', err));
+
+// initilizing Socket.IO with the server instance
+const io = new Server(server, {
+  cors: {
+      origin : ['http://localhost:8080'], // where the frontend lives
+  }
+});
+
+//connection to websocket/socket.io
+io.on('connection', (socket) => {
+  console.log(`user socket id ${socket.id}`); //random id that is assisnged to each person when connected to server
+  socket.on('send', (number, string, object) => {
+      console.log(number, string, object); 
+  })
+})
+
+// const connectionString = 'mongodb+srv://canvasdb:3otzrUz8QzvKD5Ci@canvas-project.unblkwj.mongodb.net/?retryWrites=true&w=majority';
+
+// mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => console.log('Connected to MongoDB'))
+//   .catch(err => console.error('Could not connect to MongoDB...', err));
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../dist')));
