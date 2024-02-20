@@ -1,5 +1,6 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
 import rough from "roughjs";
+import getStroke from "perfect-freehand";
 
 const Canvas = ({ elements, setElements, drawing, setDrawing }) => {
   const canvasRef = useRef(null);
@@ -19,6 +20,42 @@ const Canvas = ({ elements, setElements, drawing, setDrawing }) => {
   const createElement = (x1, y1, x2, y2) => {
     const roughElement = RoughCanvasRef.current.generator.line(x1, y1, x2, y2);
     return { x1, y1, x2, y2, roughElement };
+  };
+
+  const freeDraw = stroke => {
+    if (!stroke.length) return "";
+  
+    const d = stroke.reduce(
+      (acc, [x0, y0], i, arr) => {
+        const [x1, y1] = arr[(i + 1) % arr.length];
+        acc.push(x0, y0, (x0 + x1) / 2, (y0 + y1) / 2);
+        return acc;
+      },
+      ["M", ...stroke[0], "Q"]
+    );
+  
+    d.push("Z");
+    return d.join(" ");
+  };
+
+  const drawElement = (roughCanvas, context, element) => {
+    switch (element.type) {
+      case "line":
+      case "rectangle":
+        roughCanvas.draw(element.roughElement);
+        break;
+      case "pencil":
+        const stroke = getSvgPathFromStroke(getStroke(element.points));
+        context.fill(new Path2D(stroke));
+        break;
+      case "text":
+        context.textBaseline = "top";
+        context.font = "24px sans-serif";
+        context.fillText(element.text, element.x1, element.y1);
+        break;
+      default:
+        throw new Error(`Type not recognised: ${element.type}`);
+    }
   };
 
   const handleMouseDown = (e) => {
@@ -43,6 +80,8 @@ const Canvas = ({ elements, setElements, drawing, setDrawing }) => {
   const handleMouseUp = () => {
     setDrawing(false);
   };
+
+
 
   return (
     <canvas
