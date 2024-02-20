@@ -6,24 +6,18 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000; 
 const cors = require('cors');
-<<<<<<< HEAD
+
 // const authRoutes = require('./routes/auth');
 // const userRoutes = require('./routes/user');
 // const canvasRoutes = require('./routes/canvas');
-=======
-const authRoutes = require('./routes/auth');
 
-// const userRoutes = require('./routes/user');
-// const userRoutes = require('./routes/user');
-// const canvasRoutes = require('./routes/canvas');
 
->>>>>>> dev
 const mongoose = require('mongoose');
 
 app.use(cors());
 //http server created for websocket. need a seperated one from the server
 const server = http.createServer(app);
-<<<<<<< HEAD
+
 
 // initilizing Socket.IO with the server instance
 const io = new Server(server, {
@@ -41,8 +35,7 @@ io.on('connection', (socket) => {
 })
 
 const connectionString = 'mongodb+srv://canvasdb:3otzrUz8QzvKD5Ci@canvas-project.unblkwj.mongodb.net/?retryWrites=true&w=majority';
-=======
->>>>>>> dev
+
 
 // initilizing Socket.IO with the server instance
 const io = new Server(server, {
