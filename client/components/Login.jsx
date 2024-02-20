@@ -2,11 +2,41 @@ import React from "react"
 import './component.scss';
 
 const Login = () => {
+
+  const [username, setUsername] = useState(''); 
+  const [password, setPassword] = useState('');
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault(); //prevents from blank submission
+
+  //   const response = await fetch('/', {
+  //     method: 'POST',
+  //     headers:{
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ username, password }),
+  //   });
+
+  //   const data = await response.json();
+
+  //   if(response.ok) {
+  //     window.location.href = '/canvas';
+  //   } else{
+  //     console.error(data.error);
+  //   }
+
+  // };
+
+
+
+
+
+
     return (
         <div>
-          <form id="boxContainerLogin">
-            <input className='searchbox' name="username" type="text" placeholder="username" ></input>
-            <input className='searchbox' name="password" type="password" placeholder="password" ></input>
+          <form id="boxContainerLogin" onSubmit={handleSubmit}>
+            <input className='searchbox' name="username" type="text" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)} ></input>
+            <input className='searchbox' name="password" type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
             <input className="loginButton" type="submit" value="Login"></input>
           </form>
 
