@@ -30,11 +30,11 @@ const App = () => {
   const [elementType, setElementType] = useState("line");
   //render the HTML canvas element
 
-  <button onClick={sendMessge}> Send Message</button>
+  // <button onClick={sendMessge}> Send Message</button>
+
 
   return (
     <BrowserRouter>
-      <button onClick={sendMessage}> Send Message</button>
       <Routes>
         <Route path="/" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
