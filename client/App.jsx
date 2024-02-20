@@ -29,21 +29,25 @@ const App = () => {
   //sets state of element type to  a string
   const [elementType, setElementType] = useState("line");
   //render the HTML canvas element
-  return (
-    <div>
 
-    <button onClick={sendMessge}> Send Message</button>
-    <div>    
-      <Signup>Signup</Signup>
-      <Login>Login</Login>
-      <Canvas
-      elements={elements}
-      setElements={setElements}
-      drawing={drawing}
-      setDrawing={setDrawing}
-      />
-    </div>
-    </div>
+  <button onClick={sendMessge}> Send Message</button>
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        
+
+          <Route path="/" element={<Login/>}/>
+          
+          <Route path="/signup" element={<Signup/>}/>
+          <Route path="/canvas" element={<Canvas
+          elements={elements}
+          setElements={setElements}
+          drawing={drawing}
+          setDrawing={setDrawing}
+          />}/>
+      </Routes>
+    </BrowserRouter>
   
 
   );

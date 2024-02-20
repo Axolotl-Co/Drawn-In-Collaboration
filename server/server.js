@@ -6,13 +6,9 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000; 
 const cors = require('cors');
-const authRoutes = require('./routes/auth');
-<<<<<<< HEAD
+// const authRoutes = require('./routes/auth');
 // const userRoutes = require('./routes/user');
-=======
-const userRoutes = require('./routes/user');
-const canvasRoutes = require('./routes/canvas');
->>>>>>> dev
+// const canvasRoutes = require('./routes/canvas');
 const mongoose = require('mongoose');
 
 app.use(cors());
@@ -44,9 +40,9 @@ mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: 
 app.use(express.static(path.join(__dirname, '../dist')));
 
 //middleware routing 
-app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
-app.use('/canvas', canvasRoutes);
+// app.use('/auth', authRoutes);
+// app.use('/user', userRoutes);
+// app.use('/canvas', canvasRoutes);
   
      
 // The "catchall" handler: for any request that doesn't
