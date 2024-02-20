@@ -34,21 +34,19 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <button onClick={sendMessage}> Send Message</button>
       <Routes>
-        
-
-          <Route path="/" element={<Login/>}/>
-          
-          <Route path="/signup" element={<Signup/>}/>
-          <Route path="/canvas" element={<Canvas
+        <Route path="/" element={<Login/>}/>
+        <Route path="/signup" element={<Signup/>}/>
+        <Route path="/canvas" element={<Canvas
           elements={elements}
           setElements={setElements}
           drawing={drawing}
           setDrawing={setDrawing}
-          />}/>
+        />}/>
       </Routes>
     </BrowserRouter>
-  
+  );
 };
 
 export default App;

@@ -1,4 +1,4 @@
-const Canvas = require('../models/Canvas');
+const Canvas = require('../models/CanvasModel');
 
 // Create a new canvas
 exports.createCanvas = async (req, res) => {
