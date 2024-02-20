@@ -23,7 +23,7 @@ const Login = () => {
     if(response.ok) {
       window.location.href = '/canvas';
     } else{
-      console.error(data.error);
+      console.error(data.message);
     }
   };
 
