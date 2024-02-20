@@ -38,15 +38,9 @@ const Canvas = ({ elements, setElements, drawing, setDrawing, toolType }) => {
     const newElement = createElement([], clientX, clientY);
     setElements((prevState) => [...prevState, newElement]);
 
-    if (toolType === "pencil") {
-      context.strokeStyle = "#000"; // Set the stroke color
-      context.lineWidth = 2; 
-    } if (toolType === "line") {
-      // Set the line width
-      context.strokeStyle = "#FF0000"; // Set the stroke color
-      context.lineWidth = 4; 
+    context.strokeStyle = "#000"; // Set the stroke color
+    context.lineWidth = 2; // Set the line width
   };
-}
 
   const handleMouseMove = (e) => {
     if (!drawing || elements.length === 0) return;
@@ -106,7 +100,3 @@ const Canvas = ({ elements, setElements, drawing, setDrawing, toolType }) => {
 };
 
 export default Canvas;
-
-
-
-

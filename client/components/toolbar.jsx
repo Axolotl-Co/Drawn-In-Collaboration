@@ -17,7 +17,7 @@ const Toolbar = ({ setToolType }) => {
             value="pencil"
             onChange={(e) => setToolType("pencil")}
           />
-          Pencil
+          Black
         </label>
         <label>
           <input
@@ -26,7 +26,7 @@ const Toolbar = ({ setToolType }) => {
             value="line"
             onChange={(e) => setToolType("line")}
           />
-          Marker
+          Red
         </label>
       </div>
     </div>
