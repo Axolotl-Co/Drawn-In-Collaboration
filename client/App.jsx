@@ -48,8 +48,7 @@ const App = () => {
           />}/>
       </Routes>
     </BrowserRouter>
-  
-
+ 
   );
 };
 

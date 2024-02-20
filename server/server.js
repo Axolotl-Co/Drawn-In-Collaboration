@@ -6,9 +6,11 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000; 
 const cors = require('cors');
+
 // const authRoutes = require('./routes/auth');
 // const userRoutes = require('./routes/user');
 // const canvasRoutes = require('./routes/canvas');
+
 const mongoose = require('mongoose');
 
 app.use(cors());
